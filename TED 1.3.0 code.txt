@@ -1,0 +1,130 @@
+    Dim EncryptionFactor As Integer
+    Dim LoadDone As Boolean = False
+    Public Sub LoadSlot()
+        If (NumericUpDown2.Value = 1) Then
+            NumericUpDown1.Value = My.Settings.Slot1
+        ElseIf (NumericUpDown2.Value = 2) Then
+            NumericUpDown1.Value = My.Settings.Slot2
+        ElseIf (NumericUpDown2.Value = 3) Then
+            NumericUpDown1.Value = My.Settings.Slot3
+        ElseIf (NumericUpDown2.Value = 4) Then
+            NumericUpDown1.Value = My.Settings.Slot4
+        ElseIf (NumericUpDown2.Value = 5) Then
+            NumericUpDown1.Value = My.Settings.Slot5
+        End If
+    End Sub
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Location = New Point(My.Settings.X, My.Settings.Y)
+        CheckBox1.CheckState = Int(My.Settings.SaveLocation)
+        CheckBox2.CheckState = Int(My.Settings.TopMost)
+        LoadDone = True
+        NumericUpDown2.Value = My.Settings.SlotSelected
+        LoadSlot()
+    End Sub
+    Private Sub Form1_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        My.Settings.SaveLocation = CBool(CheckBox1.CheckState)
+        My.Settings.TopMost = CBool(CheckBox2.CheckState)
+    End Sub
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If (TextBox1.Text <> "") Then
+            TextBox2.Clear()
+            For Each letter As String In TextBox1.Text
+                TextBox2.Text += Chr(Asc(letter) + EncryptionFactor)
+            Next
+            TextBox1.Clear()
+        End If
+    End Sub
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If (TextBox2.Text <> "") Then
+            TextBox1.Clear()
+            For Each letter As String In TextBox2.Text
+                TextBox1.Text += Chr(Asc(letter) - EncryptionFactor)
+            Next
+            TextBox2.Clear()
+        End If
+    End Sub
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+        If (LoadDone = True) Then
+            EncryptionFactor = NumericUpDown1.Value
+        End If
+    End Sub
+    Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
+        If (LoadDone = True) Then
+            LoadSlot()
+            My.Settings.SlotSelected = NumericUpDown2.Value
+        End If
+    End Sub
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If (NumericUpDown2.Value = 1) Then
+            My.Settings.Slot1 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 2) Then
+            My.Settings.Slot2 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 3) Then
+            My.Settings.Slot3 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 4) Then
+            My.Settings.Slot4 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 5) Then
+            My.Settings.Slot5 = NumericUpDown1.Value
+        End If
+    End Sub
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If (CheckBox1.Checked = True) Then
+            Timer1.Start()
+        ElseIf (CheckBox1.Checked = False) Then
+            Timer1.Stop()
+        End If
+    End Sub
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        If (CheckBox2.Checked = True) Then
+            My.Settings.TopMost = True
+            Me.TopMost = My.Settings.TopMost
+        ElseIf (CheckBox2.Checked = False) Then
+            My.Settings.TopMost = False
+            Me.TopMost = My.Settings.TopMost
+        End If
+    End Sub
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        My.Settings.X = Me.Location.X
+        My.Settings.Y = Me.Location.Y
+    End Sub
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Process.Start(LinkLabel1.Text)
+    End Sub
+    Private Sub LinkLabel2_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+        My.Computer.Clipboard.SetText(LinkLabel2.Text)
+        MessageBox.Show("Email copied")
+    End Sub
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim OpenFileDialog As New OpenFileDialog
+        Dim FileReader As IO.StreamReader
+        Dim Import As New RichTextBox
+        Dim Temp As Integer = My.Settings.SlotSelected
+        OpenFileDialog.Title = "Import"
+        OpenFileDialog.Filter = "Seed File (*.seed) |*.seed"
+        If OpenFileDialog.ShowDialog = DialogResult.OK Then
+            FileReader = New IO.StreamReader(OpenFileDialog.FileName, True)
+            Import.Text += FileReader.ReadToEnd
+            FileReader.Close()
+            My.Settings.Slot1 = Import.Lines(0)
+            My.Settings.Slot2 = Import.Lines(1)
+            My.Settings.Slot3 = Import.Lines(2)
+            My.Settings.Slot4 = Import.Lines(3)
+            My.Settings.Slot5 = Import.Lines(4)
+            If Temp > 1 Then
+                NumericUpDown2.Value = Temp + 1
+            Else
+                NumericUpDown2.Value = Temp - 1
+            End If
+            NumericUpDown2.Value = Temp
+        End If
+    End Sub
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Dim SaveFileDialog As New SaveFileDialog
+        SaveFileDialog.Title = "Export"
+        SaveFileDialog.Filter = "Seed File (*.seed) |*.seed"
+        If SaveFileDialog.ShowDialog = DialogResult.OK Then
+            Dim ExportFile As New IO.StreamWriter(SaveFileDialog.FileName)
+            ExportFile.Write(My.Settings.Slot1 + vbNewLine + My.Settings.Slot2 + vbNewLine + My.Settings.Slot3 + vbNewLine + My.Settings.Slot4 + vbNewLine + My.Settings.Slot5)
+            ExportFile.Close()
+        End If
+    End Sub

@@ -1,0 +1,31 @@
+    Dim SEED As Integer
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If (My.Settings.frist = "no") Then
+            My.Settings.EncryptionFactor = 10
+            My.Settings.frist = "yes"
+        ElseIf (My.Settings.frist = "yes") Then
+            'SEED = My.Settings.EncryptionFactor
+        End If
+        TextBox3.Text = My.Settings.EncryptionFactor
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If (TextBox1.Text IsNot "") Then
+            TextBox2.Clear()
+            For Each letter As String In TextBox1.Text
+                TextBox2.Text += Chr(Asc(letter) + SEED)
+            Next
+            TextBox1.Clear()
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If (TextBox2.Text IsNot "") Then
+            TextBox1.Clear()
+            For Each letter As String In TextBox2.Text
+                TextBox1.Text += Chr(Asc(letter) - SEED)
+            Next
+            TextBox2.Clear()
+        End If
+    End Sub

@@ -1,0 +1,61 @@
+    Dim EncryptionFactor As Integer
+    Dim LoadDone As Boolean = False
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.TopMost = True
+        LoadDone = True
+        NumericUpDown1.Value = My.Settings.Slot1
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If (TextBox1.Text <> "") Then
+            TextBox2.Clear()
+            For Each letter As String In TextBox1.Text
+                TextBox2.Text += Chr(Asc(letter) + EncryptionFactor)
+            Next
+            TextBox1.Clear()
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If (TextBox2.Text <> "") Then
+            TextBox1.Clear()
+            For Each letter As String In TextBox2.Text
+                TextBox1.Text += Chr(Asc(letter) - EncryptionFactor)
+            Next
+            TextBox2.Clear()
+        End If
+    End Sub
+
+    Private Sub NumericUpDown1_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown1.ValueChanged
+        If (LoadDone = True) Then
+            EncryptionFactor = NumericUpDown1.Value
+        End If
+    End Sub
+    Private Sub NumericUpDown2_ValueChanged(sender As Object, e As EventArgs) Handles NumericUpDown2.ValueChanged
+        If (LoadDone = True) Then
+            If (NumericUpDown2.Value = 1) Then
+                NumericUpDown1.Value = My.Settings.Slot1
+            ElseIf (NumericUpDown2.Value = 2) Then
+                NumericUpDown1.Value = My.Settings.Slot2
+            ElseIf (NumericUpDown2.Value = 3) Then
+                NumericUpDown1.Value = My.Settings.Slot3
+            ElseIf (NumericUpDown2.Value = 4) Then
+                NumericUpDown1.Value = My.Settings.Slot4
+            ElseIf (NumericUpDown2.Value = 5) Then
+                NumericUpDown1.Value = My.Settings.Slot5
+            End If
+        End If
+    End Sub
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If (NumericUpDown2.Value = 1) Then
+            My.Settings.Slot1 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 2) Then
+            My.Settings.Slot2 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 3) Then
+            My.Settings.Slot3 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 4) Then
+            My.Settings.Slot4 = NumericUpDown1.Value
+        ElseIf (NumericUpDown2.Value = 5) Then
+            My.Settings.Slot5 = NumericUpDown1.Value
+        End If
+    End Sub
