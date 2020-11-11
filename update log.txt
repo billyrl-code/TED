@@ -1,5 +1,5 @@
 1.0.0 -release of the program to the pubilc
-1.0.0-1.5.0 -New UI, save seeds slots 5, save the position of the Form, set topmost, Dev page, Import seed and Export seed, copy button and paste button, Import settings and Export settings, redoing the code, Maybe almost infinite seeds slots and maybe custom text color and background color support
+1.1.0-1.5.0 -New UI, save seeds slots 5, save the position of the Form, set topmost, Dev page, Import seed and Export seed, copy button and paste button, Import settings and Export settings, redoing the code, Maybe almost infinite seeds slots and maybe custom text color and background color support
 +1.5.0- bug fixing, maybe batter encryption and Maybe the end of TED development
 
 1.1.0- New UI and 5 save slots
