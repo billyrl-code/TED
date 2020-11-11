@@ -8,7 +8,7 @@ Github link: https://github.com/billyrl-code/
 Telegram link: t.me/BRLC1
 
 Info about the Dev
-I'm almost 16 years old when making this file. Originally this program was a C++ program then i turned it into a VB program. I also made multiple text encrypter TED, GTF, GTE, GFE and ATED. I been coding less than 1 year.
+I'm 16 years old when making this file. Originally this program was a C++ program then i turned it into a VB program. I also made multiple text encrypter TED, GTF, GTE, GFE and ATED. I been coding less than 1 year.
 
 TED is for pc, latop, or a phone with a c++ compiler
 GTF is for pc, latop, or a phone with a c++ compiler
