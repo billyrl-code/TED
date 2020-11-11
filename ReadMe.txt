@@ -1,6 +1,3 @@
-
-TED is on pause because I need to get my grades up.
-
 TED max Encryption seeds is 129 which is based off of 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+-={}|[]\:;<>?,./`~
 TED was made for encryption text so one else can read it.
 
